@@ -6,7 +6,7 @@ steps to test the prototype
 4)run nodemon api.js
 5)open split terminal
 6)go to timesheet-app
-7)cd and drag test-app from left file explorer in to terminal command
+7)cd and drag timesheet-app from left file explorer in to terminal command
 8)run node start
 
 how to use?
