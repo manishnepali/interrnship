@@ -1,11 +1,11 @@
 #CRONOS TIMESHEET ASYNC APP
 steps to test the prototype
-1)go to ApiTest 
+1)go to Backend 
 2)open the terminal 
 3)cd and drag ApiTest from left file explorer in to terminal command
 4)run nodemon api.js
 5)open split terminal
-6)go to test-app
+6)go to timesheet-app
 7)cd and drag test-app from left file explorer in to terminal command
 8)run node start
 
