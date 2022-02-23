@@ -3,11 +3,14 @@ import {useState, useEffect, useMemo} from 'react';
 import tf from 'hh-mm-ss';
 import Table from "./Table";
 
+
+
 function Time() {
   
   const [posts, setPost] = useState([])
   const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
+  
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
@@ -32,6 +35,8 @@ function Time() {
  
   const columns = useMemo(
     () => [
+      {Header: "start Date",
+    accessor: "startDate"},
       {
         Header: "issue key",
         accessor: "issue.key"

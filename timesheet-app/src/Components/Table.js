@@ -14,17 +14,20 @@ export default function Table({ columns, data }) { const {
 
   const styles = {
     thead: {
-        width:"6%",
+        width:"4%",
       backgroundColor: "#F5DA3D",
-      padding: "5% 10%",
+      padding: "5% 3%",
     textTransform: "uppercase",
     letterSpacing: "0.03em",
+    marginBottom: "2%",
+    alignText: "center",
     
-    marginBottom: "2%"
     },
     td: {
-    width:"6%",
-      border: "solid 1px black"
+    width:"1%",
+      border: "solid 1px black",
+      backgroundColor: "grey",
+      alignText: "center",
     },
   };
 
