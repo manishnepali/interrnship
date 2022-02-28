@@ -5,12 +5,25 @@ import { useTable } from 'react-table';
 import Time from './Time';
 import Team from "./Team";
 import Approved from "./Approved";
+import Table from "./Table";
+import MemberTimesheet from "./MemberTimesheet";
+
 function Filter() {
   const [users, setUser]= useState([]);
   const [teams, setTeams]= useState([]);
   const [result, setResult]= useState([]);
- 
-{/* <Link to="/timesheet" style={{color: "white"}}>search</Link> */}
+  const [showTable, setShowTable] = useState(false);
+  const [showApproval, setShowApproval] = useState(false);
+  const [showTeams, setShowTeams] = useState(false);
+  const header ={
+    headers: {
+      'Access-Control-Allow-Origin': 'true',
+       'Accept': 'application/json',
+       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+       'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
+     }
+  }
+  // https://cors-anywhere.herokuapp.com/
 
 
   useEffect(() => {
@@ -33,14 +46,7 @@ function getWorker(e){
   const id = select.value;
   console.log(id);
   localStorage.setItem('id', id);
-  const header ={
-    headers: {
-      'Access-Control-Allow-Origin': 'true',
-       'Accept': 'application/json',
-       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-       'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
-     }
-  }
+  
   function getTeams(){
     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams/${id}/members`,
         header)
@@ -57,6 +63,46 @@ function getWorker(e){
     console.log(teams)
   }
 
+  function getMember(e){
+    e.preventDefault();
+    const select = document.getElementById("acc");
+    const accountId = select.options[select.selectedIndex].value
+    console.log(accountId);
+
+    
+    function getInfo(){
+      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/worklogs/user/${accountId}`,
+          header)
+        .then( function (response)  {
+          console.log(
+            `Response: ${response.status} ${response.statusText}`
+          )
+          setUser(response.data.results);
+          console.log("user",users);
+          
+        }).catch(err => console.error(err));
+      }
+      getInfo();
+      setShowTable(true);
+     
+      setShowApproval(false);
+      setShowTeams(false);
+
+      console.log(users)
+  }
+  function getApproval(e){
+    e.preventDefault();
+    setShowTable(false);
+
+    setShowTeams(false);
+    setShowApproval(true);
+  }
+ function getTimesheet(e){
+   e.preventDefault();
+   setShowTable(false);
+   setShowApproval(false);
+   setShowTeams(true);
+ }
 
   
 
@@ -89,27 +135,43 @@ function getWorker(e){
           <Time />
           
           </Route>
-          <Route exact path="/team">
-         
-            {/* {teams.name} <br/>
-            <p>team lead: </p>
-            {teams.lead.displayName} <br/>
-            <p>summary: </p>
-            {teams.summary} */}
-             <form action=""
-        className="Form"
-        style={{ margin: 15, padding: 10}}>
+          <Route exact path="/team">          
+         <div id="teamForm">
             <label>select a worker:</label>
-             <select style={{ margin: 15, padding: 10}} id="test">
+             <select style={{ margin: 15, padding: 10}} id="acc">
         {teams.map((team, index) => {
-         return  <option key={index}>{team.member.displayName} is a {team.memberships.active.role.name}</option>
+         return  <option key={index} value={team.member.accountId}>
+                                  {team.member.displayName} is a {team.memberships.active.role.name}
+        </option>
         })}
+
           </select> 
-          <button id="search" style={{fontSize: "1em"}}> <Link to="/team">member timesheet</Link> </button>
-          <button id="search" style={{fontSize: "1em"}}> <Link to="/timesheet">team timesheet</Link> </button>
+          <button id="memSearch" style={{fontSize: "1em"}} onClick={getMember}> <Link to="/team">see timesheet</Link> </button>
+          </div>
+          <div id="searchGroup">
+          <button id="searchTT" style={{fontSize: "1em"}} style={{  color: "white"}} onClick={getTimesheet}> 
+          team timesheet </button>
+          <button id="searchA" style={{fontSize: "1em"}} onClick={getApproval}> Timesheet Approvals </button>
 
-          </form>
+          </div>
+            {showTable ? 
+            <div id="teamlistBox">
+                    <ul style={{ margin: 15, padding: 10}}
+                     id="teamlist">
+                    {users.map((user, index) => {
+                    return  <li key={index} value={user.accountId}>
+                                            <p>worklogId: {user.jiraWorklogId} </p> 
+                                            <p>start date: {user.startDate}</p> 
+                                            <p>tempoWorklogId: {user.tempoWorklogId}</p> 
+                                            <p>timeSpentSeconds: {user.Time}</p> 
+                                            <p>description: {user.description} </p> 
+                    </li>
+                    })}
 
+          </ul> 
+            </div> : null}
+            {showApproval ? <Approved/>:null}
+          {showTeams ? <Time/>:null}
           
           </Route>
           <Route exact path="/approved">

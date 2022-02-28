@@ -29,9 +29,10 @@ a {
 .Form{
   gap: 10px;
   margin-left: 20%;
+  padding: 15%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: baseline;
 }
 
@@ -63,10 +64,57 @@ a {
   font-size: 1em;
   line-height: 1.2em;
   background-color: rgba(255, 255, 255, 0.1);
-  
-}
+  justify-content: center;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
+}
+#acc{
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  justify-content: center;
+}
 #list{
   padding: 5%;
   
+}
+#teamlist{
+ display: flex;
+ flex-wrap: wrap;
+ column-gap: 5%
+ 
+}
+#teamlist li{
+  margin-bottom: 2%;
+  border-radius: 30px;
+  width: 30%;
+  padding: 2%;
+  list-style: none;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;}
+#teamlistBox{
+  margin-left: 15%;
+  
+}
+  #teamForm{
+
+  margin-left: 20%;
+  overflow: hidden;
+}
+#searchGroup button, #memSearch button{
+ 
+  padding: 1% 2%;
+  border-radius: 12px;
+  box-sizing: border-box;
+  border: none;
+  font-size: 1.6em;
+  cursor: pointer;
+  margin-right: 15%;
+  background-color: #F5DA3D;
+  color: white;
+  font-weight: bold;
+  
+}
+#searchGroup{
+margin-left: 20%;
+}
+#memSearch {
+  font-size: 1em;
 }

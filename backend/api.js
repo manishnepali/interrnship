@@ -97,7 +97,7 @@ await fetch('https://api.tempo.io/core/3/teams', {
 
  
   
-await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01-01&to=2021-01-31`, {
+await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01-01&to=2021-02-28`, {
   method: 'GET',
   headers: {
     'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
