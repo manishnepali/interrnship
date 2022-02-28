@@ -7,8 +7,8 @@ function Nav() {
           <ul style={{listStyle: "none", marginTop: "50%"}}>
             
                  <li><a href="/">Home</a></li>
-                 <li><a href="/timesheet">test timesheet</a></li>
-                 <li>approved timesheet</li>
+                 <li><a href="/timesheet">timesheet</a></li>
+                 <li><a href="/approved">approved</a></li>
 
                  
         

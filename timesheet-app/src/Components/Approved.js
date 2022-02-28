@@ -10,24 +10,24 @@ function Approved() {
   const [posts, setPost] = useState([])
   const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
-  
+  const id = localStorage.getItem('id');
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
       'Accept': 'application/json',
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
     }
     }
 
     useEffect(() => {
-      axios.get('/approved',
+      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=2021-01-01&to=2021-01-31`,
       header)
     .then( function (response)  {
       console.log(
         `Response: ${response.status} ${response.statusText}`
       )
       setPost(response.data.results);
-      setUser(response.data.results[1].jiraWorklogId)
       setLoadingData(false);
     }).catch(err => console.error(err));
   },[]);
@@ -35,8 +35,12 @@ function Approved() {
  
   const columns = useMemo(
     () => [
-      {Header: "results",
-    accessor: "results"},
+      {Header: "from",
+    accessor: "period.from"},
+    {Header: "to",
+    accessor: "period.to"},
+    {Header: "status",
+    accessor: "status.key"},
       
     
     ],
@@ -51,12 +55,14 @@ function Approved() {
 
     return (
       <div className="Approved">
+        <h1>
+      current approval for the team {id}
+      </h1>
          {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (
         <Table columns={columns} data={posts}
         ></Table>
-
       )}
       
       </div>

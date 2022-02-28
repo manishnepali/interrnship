@@ -97,7 +97,7 @@ await fetch('https://api.tempo.io/core/3/teams', {
 
  
   
-await fetch(`https://api.tempo.io/core/3/timesheet-approvals/user/61bb432957d5c3007124f6d5`, {
+await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01-01&to=2021-01-31`, {
   method: 'GET',
   headers: {
     'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
@@ -114,3 +114,23 @@ await fetch(`https://api.tempo.io/core/3/timesheet-approvals/user/61bb432957d5c3
     res.send(text)
   }))
   .catch(err => console.error(err));
+
+  await fetch('https://api.tempo.io/core/3/teams/2/members', {
+  method: 'GET',
+  headers: {
+    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
+    'Accept': 'application/json'
+  }
+})
+  .then(response => {
+    console.log(
+      `Response: ${response.status} ${response.statusText}`
+    )
+    return response.json();
+  })
+  .then(text => app.get('/test', (req, res) => {
+    res.send(text)
+  }))
+  .catch(err => console.error(err));
+
+ 
