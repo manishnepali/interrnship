@@ -10,25 +10,30 @@ function MemberTimesheet() {
   const [posts, setPost] = useState([])
   const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
+  const [members, setMembers] = useState([]);
+  const accountId = localStorage.getItem('accountId');
   
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
       'Accept': 'application/json',
-      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS"
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
+
     }
     }
 
     useEffect(() => {
-      axios.get('/api',
+      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/worklogs/user/${accountId}`,
       header)
     .then( function (response)  {
       console.log(
         `Response: ${response.status} ${response.statusText}`
       )
-      setPost(response.data.results);
-      setUser(response.data.results[1].jiraWorklogId)
+      setMembers(response.data.results);
+      console.log("member",members);
       setLoadingData(false);
+      
     }).catch(err => console.error(err));
   },[]);
 
@@ -80,12 +85,12 @@ function MemberTimesheet() {
 
 
     return (
-      <div className="Time">
+      <div className="MemberTimesheet">
         <h2>{}</h2>
          {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (
-        <Table columns={columns} data={posts}
+        <Table columns={columns} data={members}
         ></Table>
 
       )}

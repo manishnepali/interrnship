@@ -4,6 +4,7 @@ import Nav from './Components/Nav'
 
 
 
+
 function App() {
   return (
     <div className="App">
@@ -12,7 +13,7 @@ function App() {
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet"></link>
       <Nav></Nav>
       <Filter></Filter>
-    
+     
     </div>
   );
 }

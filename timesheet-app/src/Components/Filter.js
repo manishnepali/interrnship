@@ -15,6 +15,7 @@ function Filter() {
   const [showTable, setShowTable] = useState(false);
   const [showApproval, setShowApproval] = useState(false);
   const [showTeams, setShowTeams] = useState(false);
+  const [members, setMembers] = useState([]);
   const header ={
     headers: {
       'Access-Control-Allow-Origin': 'true',
@@ -68,8 +69,9 @@ function getWorker(e){
     const select = document.getElementById("acc");
     const accountId = select.options[select.selectedIndex].value
     console.log(accountId);
-
-    
+    localStorage.setItem('accountId', accountId);
+   const test =localStorage.getItem('accountId');
+    console.log("local", test);
     function getInfo(){
       axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/worklogs/user/${accountId}`,
           header)
@@ -77,12 +79,12 @@ function getWorker(e){
           console.log(
             `Response: ${response.status} ${response.statusText}`
           )
-          setUser(response.data.results);
-          console.log("user",users);
+          setMembers(response.data.results);
+          console.log("member",members);
           
         }).catch(err => console.error(err));
       }
-      getInfo();
+      // getInfo();
       setShowTable(true);
      
       setShowApproval(false);
@@ -156,19 +158,20 @@ function getWorker(e){
           </div>
             {showTable ? 
             <div id="teamlistBox">
-                    <ul style={{ margin: 15, padding: 10}}
+            <MemberTimesheet/>
+                    {/* <ul style={{ margin: 15, padding: 10}}
                      id="teamlist">
-                    {users.map((user, index) => {
-                    return  <li key={index} value={user.accountId}>
-                                            <p>worklogId: {user.jiraWorklogId} </p> 
-                                            <p>start date: {user.startDate}</p> 
-                                            <p>tempoWorklogId: {user.tempoWorklogId}</p> 
-                                            <p>timeSpentSeconds: {user.Time}</p> 
-                                            <p>description: {user.description} </p> 
+                    {members.map((member, index) => {
+                    return  <li key={index} value={member.accountId}>
+                                            <p>worklogId: {member.jiraWorklogId} </p> 
+                                            <p>start date: {member.startDate}</p> 
+                                            <p>tempoWorklogId: {member.tempoWorklogId}</p> 
+                                            <p>timeSpentSeconds: {member.Time}</p> 
+                                            <p>description: {member.description} </p> 
                     </li>
                     })}
 
-          </ul> 
+          </ul>  */}
             </div> : null}
             {showApproval ? <Approved/>:null}
           {showTeams ? <Time/>:null}
