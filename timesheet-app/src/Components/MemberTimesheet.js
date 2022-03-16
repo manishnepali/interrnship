@@ -2,6 +2,7 @@ import axios from 'axios';
 import {useState, useEffect, useMemo} from 'react';
 import tf from 'hh-mm-ss';
 import Table from "./Table";
+import Visual from './Visual';
 
 
 
@@ -18,7 +19,7 @@ function MemberTimesheet() {
      'Access-Control-Allow-Origin':'*',
       'Accept': 'application/json',
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
+      'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
 
     }
     }
@@ -40,6 +41,7 @@ function MemberTimesheet() {
  
   const columns = useMemo(
     () => [
+      
       {Header: "start Date",
     accessor: "startDate"},
       {
@@ -51,14 +53,11 @@ function MemberTimesheet() {
         accessor: "issue.id"
       },
       {
-        Header: "Timesheet",
+        Header: "jira worklog id",
         accessor: "jiraWorklogId" // accessor is the "key" in the data
 
       },
-      {
-        Header: "Teammember",
-        accessor: "author.displayName"
-      },
+      
       {
         Header: "description",
         accessor: "description"
@@ -86,7 +85,7 @@ function MemberTimesheet() {
 
     return (
       <div className="MemberTimesheet">
-        <h2>{}</h2>
+        <h2>time sheet for {accountId}</h2>
          {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (
@@ -94,6 +93,7 @@ function MemberTimesheet() {
         ></Table>
 
       )}
+              <Visual/>
       {/* <ul>
       {posts.map((post, index) => {
         return <li key={index} 

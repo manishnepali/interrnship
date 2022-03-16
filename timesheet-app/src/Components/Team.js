@@ -18,7 +18,7 @@ function Team() {
    'Access-Control-Allow-Origin':'*',
     'Accept': 'application/json',
     "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
+    'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
   }
   }
 

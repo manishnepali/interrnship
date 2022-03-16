@@ -87,11 +87,18 @@ a {
   border-radius: 30px;
   width: 30%;
   padding: 2%;
-  list-style: none;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;}
-#teamlistBox{
-  margin-left: 15%;
+  list-style: none;}
+
+#teamBox{
   
+  border-radius: 20px;;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 2%;
+  height: 40%;
+  margin-top: 5%;
+  margin-left: 5%;
+  margin-right: 5%;
+  overflow: hidden;
 }
   #teamForm{
 
@@ -113,8 +120,11 @@ a {
   
 }
 #searchGroup{
-margin-left: 20%;
+margin-left: 12%;
 }
 #memSearch {
   font-size: 1em;
+}
+#testt{
+  display: flex; 
 }

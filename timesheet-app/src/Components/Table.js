@@ -14,9 +14,10 @@ export default function Table({ columns, data }) { const {
 
   const styles = {
     thead: {
+      height: "50px",
         width:"4%",
       backgroundColor: "#F5DA3D",
-      padding: "5% 3%",
+    
     textTransform: "uppercase",
     letterSpacing: "0.03em",
     marginBottom: "2%",
@@ -24,9 +25,7 @@ export default function Table({ columns, data }) { const {
     
     },
     td: {
-    width:"1%",
-      border: "solid 1px black",
-      backgroundColor: "grey",
+      height: "50px",
       alignText: "center",
     },
   };

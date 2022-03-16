@@ -34,7 +34,7 @@ const test = "http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/timesheet-approval/
   await fetch('https://api.tempo.io/core/3/worklogs', {
   method: 'GET',
   headers: {
-    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
+    'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
     'Accept': 'application/json'
   }
 })
@@ -50,7 +50,7 @@ const test = "http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/timesheet-approval/
   .catch(err => console.error(err));
 
 //fetch all projeects from abano
-  await fetch('https://abano-playground.atlassian.net/rest/api/3/project', {
+  await fetch('https://abano-playground.atlassian.net/rest/api/3/project/TT', {
     method: 'GET',
     headers: {
       'Authorization': `Basic ${Buffer.from(
@@ -80,7 +80,7 @@ app.listen(port, () => {
 await fetch('https://api.tempo.io/core/3/teams', {
   method: 'GET',
   headers: {
-    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
+    'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
     'Accept': 'application/json'
   }
 })
@@ -97,10 +97,10 @@ await fetch('https://api.tempo.io/core/3/teams', {
 
  
   
-await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01-01&to=2021-02-28`, {
+await fetch(`https://api.tempo.io/core/3/timesheet-approvals/user/61bb432957d5c3007124f6d5?from=2022-01-01&to=2022-01-31`, {
   method: 'GET',
   headers: {
-    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
+    'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
     'Accept': 'application/json'
   }
 })
@@ -115,10 +115,10 @@ await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01
   }))
   .catch(err => console.error(err));
 
-  await fetch('https://api.tempo.io/core/3/teams/2/members', {
+  await fetch('https://api.tempo.io/core/3/worklogs/user/61bb432957d5c3007124f6d5', {
   method: 'GET',
   headers: {
-    'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS",
+    'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
     'Accept': 'application/json'
   }
 })
@@ -128,7 +128,7 @@ await fetch(`https://api.tempo.io/core/3/timesheet-approvals/team/2?from=2021-01
     )
     return response.json();
   })
-  .then(text => app.get('/test', (req, res) => {
+  .then(text => app.get('/schemes', (req, res) => {
     res.send(text)
   }))
   .catch(err => console.error(err));

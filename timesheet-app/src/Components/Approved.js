@@ -16,7 +16,7 @@ function Approved() {
      'Access-Control-Allow-Origin':'*',
       'Accept': 'application/json',
       "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-      'Authorization': "Bearer s0sHctOaYXAtK2bmSI4tVj9NrtOxiS"
+      'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
     }
     }
 
@@ -56,7 +56,7 @@ function Approved() {
     return (
       <div className="Approved">
         <h1>
-      current approval for the team {id}
+      current approval for this team
       </h1>
          {loadingData ? (
         <p>Loading Please wait...</p>
