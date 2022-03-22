@@ -70,7 +70,7 @@ const rows = [
       return (
         <div className="Visual"
         style={{marginLeft: "5%", paddingTop: "2%"}}>
-            
+           
    
              {/* <Table
              
@@ -131,10 +131,10 @@ const rows = [
     return{id: m.issue.id,
         group:   m.jiraWorklogId,
          title:  tf.fromS(m.timeSpentSeconds),
-         start_time:  moment().startOf("day").toDate(), end_time:  moment().startOf("day").add(1, "day").toDate()}
+         start_time:  moment(`${m.startDate}`, "YYYY-MM-DD").toDate(), end_time:  moment(`${m.startDate}`,"YYYY-MM-DD").add(1, "day").toDate()}
            })}
-           defaultTimeStart={moment().add(-7, 'day')}
-           defaultTimeEnd={moment().add(7, 'day')}
+           visibleTimeStart={moment().add(-20, 'day')}
+           visibleTimeEnd={moment().add(1, 'day')}
              />   
            
       

@@ -4,6 +4,7 @@ import tf from 'hh-mm-ss';
 import Table from "./Table";
 import Visual from './Visual';
 import moment from 'moment';
+import Scheduler from './Scheduler'
 
 
 function Time() {
@@ -46,55 +47,45 @@ function Time() {
         accessor: "author.displayName",
       },
      
-      // {
-      //   Header: "issue key",
-      //   accessor: "issue.key"
-      // },
-      // {
-      //   Header: "issue id",
-      //   accessor: "issue.id"
-      // },
-      // {
-      //   Header: "Timesheet",
-      //   accessor: "jiraWorklogId" // accessor is the "key" in the data
+      {
+        Header: "issue key",
+        accessor: "issue.key"
+      },
+      {
+        Header: "issue id",
+        accessor: "issue.id"
+      },
+      {
+        Header: "Timesheet",
+        accessor: "jiraWorklogId" // accessor is the "key" in the data
 
-      // },
+      },
       {
         Header: "description",
         accessor: "description"
       },
   
-  // { Header: 'date and time',
-  //   columns: [
+  { Header: 'date and time',
+    columns: [
      
-  // {Header: "date",
-  // accessor: "startDate",
-  // },
-  // {
-  //   Header:'hours',
-  //   accessor: "timeSpentSeconds",
-  //       Cell: ({ cell: { value } }) => {
-  //         const hour = tf.fromS(value);
-  //         return (
-  //           hour
-  //         );
-  //       }
-  //     },
+  {Header: "date",
+  accessor: "startDate",
+  },
+  {
+    Header:'hours',
+    accessor: "timeSpentSeconds",
+        Cell: ({ cell: { value } }) => {
+          const hour = tf.fromS(value);
+          return (
+            hour
+          );
+        }
+      },
       
-      // {
-      //   Header: `start`,
-
-      //   accessor: "timeSpentSeconds",
-      //   Cell: ({ cell: { value } }) => {
-      //     const hour = tf.fromS(value);
-      //     return (
-      //       hour
-      //     );
-      //   }
-      // },
+     
       
 
-    // ],},
+    ],},
     ],
     []
   );
@@ -108,7 +99,8 @@ function Time() {
     return (
       <div className="Time">
       <h2>Team timesheet</h2>
-         {loadingData ? (
+   <Scheduler />
+         {/* {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (
         <div id="testt">
@@ -116,7 +108,7 @@ function Time() {
         ></Table>
         <Visual></Visual>
         </div>
-      )}
+      )} */}
       {/* <ul>
       {posts.map((post, index) => {
         return <li key={index} 

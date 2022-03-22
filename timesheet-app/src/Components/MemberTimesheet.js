@@ -78,7 +78,7 @@ function MemberTimesheet() {
   );
 
  
-
+  const personName =document.getElementById("personName").text;
 
     
 
@@ -89,11 +89,11 @@ function MemberTimesheet() {
          {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (
-        <Table columns={columns} data={members}
-        ></Table>
-
+        // <Table columns={columns} data={members}
+        // ></Table>
+ <Visual/>
       )}
-              <Visual/>
+             
       {/* <ul>
       {posts.map((post, index) => {
         return <li key={index} 

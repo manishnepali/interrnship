@@ -29,18 +29,31 @@ function Filter() {
   }
   // https://cors-anywhere.herokuapp.com/
 
-
   useEffect(() => {
-    axios.get('/team')
+    axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
+    // axios.get(`https://cors.bridged.cc/https://api.tempo.io/core/3/teams`,
+    header)
   .then( function (response)  {
     console.log(
       `Response: ${response.status} ${response.statusText}`
     )
     setUser(response.data.results);
-    setResult(response.data)
- 
+    console.log("uuser",users);
+
+    
   }).catch(err => console.error(err));
 },[]);
+//   useEffect(() => {
+//     axios.get('/team')
+//   .then( function (response)  {
+//     console.log(
+//       `Response: ${response.status} ${response.statusText}`
+//     )
+//     setUser(response.data.results);
+//     setResult(response.data)
+ 
+//   }).catch(err => console.error(err));
+// },[]);
 console.log(users);
 function getWorker(e){
   e.preventDefault();
@@ -88,6 +101,9 @@ function getWorker(e){
         }).catch(err => console.error(err));
       }
       // getInfo();
+      const personName = document.getElementById("personName").text
+      localStorage.setItem('personName', personName);
+      
       setShowTable(true);
      
       setShowApproval(false);
@@ -133,6 +149,8 @@ function getWorker(e){
 
   }
  function getTimesheet(e){
+
+
    e.preventDefault();
    setShowTable(false);
    setShowApproval(false);
@@ -183,7 +201,7 @@ setShowTable(false);
             <label>select a worker:</label>
              <select style={{ margin: 15, padding: 10}} id="acc">
         {teams.map((team, index) => {
-         return  <option key={index} value={team.member.accountId}>
+         return  <option key={index} value={team.member.accountId} id="personName">
                                   {team.member.displayName} is a {team.memberships.active.role.name}
         </option>
         })}
