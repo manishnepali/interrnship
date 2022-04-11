@@ -2,7 +2,7 @@ import axios from 'axios';
 import {useState, useEffect, useMemo} from 'react';
 import tf from 'hh-mm-ss';
 import Table from "./Table";
-
+import moment from 'moment';
 
 
 function Approved() {
@@ -11,6 +11,11 @@ function Approved() {
   const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
   const id = localStorage.getItem('id');
+// const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD');
+// const endOfMonth   = moment().clone().endOf('month').format('YYYY-MM-DD');
+const startOfMonth = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');;
+const endOfMonth   = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');;
+console.log("s:", startOfMonth, "e:", endOfMonth);
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
@@ -21,7 +26,7 @@ function Approved() {
     }
 
     useEffect(() => {
-      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=2022-03-01&to=2022-03-31`,
+      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=${startOfMonth}&to=${endOfMonth}`,
       header)
     .then( function (response)  {
       console.log(
