@@ -89,7 +89,7 @@ async function getWorklogs(){
   
 }
 
-
+const summaryStart = new DayPilot.Date("2100-01-01");
 
 const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
  function datePick(){
@@ -116,7 +116,7 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
                         {groupBy: "Month"},
                         {groupBy: "Day", format: "d"}
                     ]}
-                    
+                   
                     cellGroupBy
                     treeEnabled={true} 
                     autoScroll ={"Always"} 
