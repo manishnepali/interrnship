@@ -21,7 +21,7 @@ function Approved() {
     }
 
     useEffect(() => {
-      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=2022-01-01&to=2022-01-31`,
+      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=2022-03-01&to=2022-03-31`,
       header)
     .then( function (response)  {
       console.log(

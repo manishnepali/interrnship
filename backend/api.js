@@ -9,7 +9,7 @@ app.use(cors());
 
 const test = "http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/timesheet-approval/pending http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/worklogs/{worklogId}"
 //feych users from abano 
-  await fetch('https://abano-playground.atlassian.net/rest/api/3/users/search', {
+  await fetch(`https://abano-playground.atlassian.net/rest/api/3/search?jql=reporter=5e5e4a5429e6d00c970855e4`, {
     method: 'GET',
     headers: {
       'Authorization': `Basic ${Buffer.from(
@@ -115,7 +115,7 @@ await fetch(`https://api.tempo.io/core/3/timesheet-approvals/user/61bb432957d5c3
   }))
   .catch(err => console.error(err));
 
-  await fetch('https://api.tempo.io/core/3/worklogs/user/61bb432957d5c3007124f6d5', {
+  await fetch('https://api.tempo.io/core/3/work-attributes', {
   method: 'GET',
   headers: {
     'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",

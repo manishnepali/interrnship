@@ -3,6 +3,7 @@ import {useState, useEffect, useMemo} from 'react';
 import tf from 'hh-mm-ss';
 import Table from "./Table";
 import Visual from './Visual';
+import Scheduler from './Scheduler';
 
 
 
@@ -91,7 +92,7 @@ function MemberTimesheet() {
       ) : (
         // <Table columns={columns} data={members}
         // ></Table>
- <Visual/>
+ <Scheduler/>
       )}
              
       {/* <ul>

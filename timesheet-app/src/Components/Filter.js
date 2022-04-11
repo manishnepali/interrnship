@@ -8,6 +8,9 @@ import Approved from "./Approved";
 import Table from "./Table";
 import MemberTimesheet from "./MemberTimesheet";
 
+import cors from "cors"
+
+
 function Filter() {
   const [users, setUser]= useState([]);
   const [teams, setTeams]= useState([]);
@@ -24,12 +27,15 @@ function Filter() {
       'Access-Control-Allow-Origin': 'true',
        'Accept': 'application/json',
        "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-       'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
+       'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
+       
      }
   }
   // https://cors-anywhere.herokuapp.com/
+ 
 
   useEffect(() => {
+
     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
     // axios.get(`https://cors.bridged.cc/https://api.tempo.io/core/3/teams`,
     header)
@@ -63,6 +69,7 @@ function getWorker(e){
   const id = select.value;
   console.log(id);
   localStorage.setItem('id', id);
+  localStorage.setItem('team', value);
   
   function getTeams(){
     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams/${id}/members`,
