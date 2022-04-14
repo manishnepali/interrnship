@@ -1,14 +1,10 @@
 import { useEffect, useState, useMemo,useCallback } from "react";
 import axios from "axios";
 import {BrowserRouter as Router, Route, Switch, Link, useHistory} from 'react-router-dom';
-import { useTable } from 'react-table';
 import Time from './Time';
-import Team from "./Team";
 import Approved from "./Approved";
-import Table from "./Table";
-import MemberTimesheet from "./MemberTimesheet";
+import  Scheduler from "./Scheduler";
 
-import cors from "cors"
 
 
 function Filter() {
@@ -21,6 +17,7 @@ function Filter() {
   const [members, setMembers] = useState([]);
   const [close, setClose] = useState(false);
   const [showText, setText] = useState(true);
+  const [refresh, setRefesh] = useState(true);
 
   const header ={
     headers: {
@@ -84,11 +81,12 @@ function getWorker(e){
       }).catch(err => console.error(err));
     }
     getTeams();
-    console.log(teams)
+    console.log(teams,  id)
   }
 
   function getMember(e){
     e.preventDefault();
+    setRefesh(false);
     const select = document.getElementById("acc");
     const accountId = select.options[select.selectedIndex].value
     console.log(accountId);
@@ -117,34 +115,35 @@ function getWorker(e){
       setShowTeams(false);
       setClose(true);
       setText(false);
-
-      console.log(users)
-  }
-  function getWaiting(e){
-    e.preventDefault();
-
-    function getWait(){
-      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/waiting`,
-          header)
-        .then( function (response)  {
-          console.log(
-            `Response: ${response.status} ${response.statusText}`
-          )
-          setResult(response.data.results);
-          console.log("result",result);
-          
-        }).catch(err => console.error(err));
-      }
-       getWait();
-      setShowTable(false);
      
-      setShowApproval(false);
-      setShowTeams(false);
-      setClose(true);
-      setText(false);
-
       console.log(users)
+      
   }
+  // function getWaiting(e){
+  //   e.preventDefault();
+
+  //   function getWait(){
+  //     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/waiting`,
+  //         header)
+  //       .then( function (response)  {
+  //         console.log(
+  //           `Response: ${response.status} ${response.statusText}`
+  //         )
+  //         setResult(response.data.results);
+  //         console.log("result",result);
+          
+  //       }).catch(err => console.error(err));
+  //     }
+  //      getWait();
+  //     setShowTable(false);
+     
+  //     setShowApproval(false);
+  //     setShowTeams(false);
+  //     setClose(true);
+  //     setText(false);
+
+  //     console.log(users)
+  // }
   function getApproval(e){
     e.preventDefault();
     setShowTable(false);
@@ -172,6 +171,7 @@ setShowTable(false);
    setShowTeams(false);
    setClose(false);
    setText(true);
+   setRefesh(true);
 
 
 }
@@ -214,21 +214,21 @@ setShowTable(false);
         })}
 
           </select> 
-          <button id="searchTT" style={{fontSize: "1em"}} onClick={getMember}> <Link to="/team">see timesheet</Link> </button>
+          {refresh? <a id="buttonsUx" style={{fontSize: "1em"}} onClick={getMember}> <Link to="/team">see timesheet</Link> </a> :null}
           </div>
           <div id="searchGroup">
-          <button id="searchTT" style={{fontSize: "1em", color: "white"}} onClick={getTimesheet}> 
-          Team Timesheet </button>
-          <button id="searchA" style={{fontSize: "1em"}} onClick={getApproval}> Timesheet Approvals </button>
-          <button id="searchA" style={{fontSize: "1em"}} onClick={getWaiting}> Timesheet waiting for Approvals </button>
+          <a id="buttonsUx" class ="seeTimesheet" style={{fontSize: "1em"}} onClick={getTimesheet}> 
+          logged hours </a>
+          <a id="buttonsUx" style={{fontSize: "1em", marginLeft:"10%"}} onClick={getApproval}> Timesheet Approvals </a>
+          {/* <button id="searchA" style={{fontSize: "1em"}} onClick={getWaiting}> Timesheet waiting for Approvals </button> */}
 
           </div>
           <div id="teamBox">
             {showText?<div>
               <h3>How to use:</h3>
               <p>Select a member from the select field</p>
-              <p>Now you can view timesheet by member and team by selecting the given buutton.</p>
-               <p>Check the statous of timesheet approvals for this month for this team
+              <p>Now you can view timesheet by member.</p>
+               <p>Check the status of timesheet approvals for this month for this team
               </p>
               <p>optional: see timesheet waiting for your apprroval </p>
             </div>:null}
@@ -237,18 +237,18 @@ setShowTable(false);
        
             {showTable ? 
               
-            <MemberTimesheet/> : null}
+              <Scheduler/> : null}
                    
          
             {showApproval ? <Approved/>:null}
           {showTeams ? <Time/>:null}
         
           </div>
-          {close ? <button id="searchTT" style={{fontSize: "1em", color: "white",
-          position: "absolute", left: "90%", top: "50%", borderRadius: "33%", backgroundColor: "#ff4c30", cursor:"pointer",
-          borderColor:'none'
+          {close ? <a style={{fontSize: "1em", color: "white",
+          position: "absolute", left: "90%", top: "60%", borderRadius: "50%", backgroundColor: "#ff4c30", cursor:"pointer",
+          display: "flex",flexFlow: "column nowrap",justifyContent: "center", alignItems: "center",  padding: "8px 16px"
         }}
-          onClick={closeDiv}> x </button>:null}
+          onClick={closeDiv}> X </a>:null}
           </Route>
           <Route exact path="/approved">
 

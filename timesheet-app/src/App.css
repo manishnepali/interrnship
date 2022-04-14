@@ -1,5 +1,5 @@
+
 *{
- 
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -52,6 +52,10 @@ a {
   color: white;
   font-weight: bold;
   float: right;
+}
+#search:hover{
+  background-color: #beab3f;
+
 }
 
 .Form select{
@@ -127,4 +131,19 @@ margin-left: 12%;
 }
 #testt{
   display: flex; 
+}
+#buttonsUx{
+  text-decoration: none;
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #F5DA3D;
+  color: black;
+  border-radius: 9px;
+
+}
+#buttonsUx:hover{
+  cursor: pointer;
+  background-color: #beab3f;
+  color: black;
+  
 }

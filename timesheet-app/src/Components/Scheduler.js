@@ -54,6 +54,7 @@ export default function Scheduler(){
     },
     'Accept': 'application/json',
     },
+   
     
   )
   .then( function (response)  {
@@ -65,20 +66,7 @@ export default function Scheduler(){
     setLoadingData(false);
   }).catch(err => console.error(err));
     },[]);
-  //   useEffect(() => {
-  //     axios.get(`/api`,
-      
-  //     header)
-  //   .then( function (response)  {
-  //     console.log(
-  //       `Response: ${response.status} ${response.statusText}`
-  //     )
-  //     setPost(response.data.results);
-     
-  //     console.log(posts)
-  //     setLoadingData(false);
-  //   }).catch(err => console.error(err));
-  // },[]);
+
 async function getWorklogs(){
   const total = document.getElementsByClassName("scheduler_default_event_inner")[0].textContent;
   console.log("t:", ...total)
@@ -90,6 +78,29 @@ async function getWorklogs(){
 }
 
 const summaryStart = new DayPilot.Date("2100-01-01");
+function createTimeline() {
+  const timeline = [];
+  const first = DayPilot.Date.today().firstDayOfMonth();
+  const days = DayPilot.Date.today().daysInMonth();
+  for (let i = 0; i < days; i++) {
+    const start1 = start.addDays(i);
+    timeline.push({
+      start: start1,
+      end: start1.addDays(1)
+    });
+  }
+
+  timeline.push({
+    start: summaryStart,
+    end: summaryStart.addDays(1)
+  });
+
+  
+  return timeline;
+}
+
+
+
 
 const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
  function datePick(){
@@ -105,23 +116,32 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
 
         return (
             <div style={{width: "70%",  marginLeft: "15%", marginBottom: "2%"}}>
-              <button onClick={getWorklogs}>test</button>
+             
+              <h2>user timesheet</h2>
+         {loadingData ? (
+        <p>Loading Please wait...</p>
+      ) : (
                        <DayPilotScheduler
-                   cellWidth = {75}
+                  //  cellWidth = {75}
                    eventHeight = {50}
                      startDate = {start}
                      days = {DayPilot.Date.today().daysInMonth()}
-                    scale = {"Day"}
+                    // scale = {"Day"}
+                    scale = {"Manual"}
                     timeHeaders = {[
                         {groupBy: "Month"},
                         {groupBy: "Day", format: "d"}
                     ]}
-                   
+                   timeline={createTimeline()}
                     cellGroupBy
                     treeEnabled={true} 
                     autoScroll ={"Always"} 
                     rowHeaderColumnsMode={"Tabular"}     
                     eventHoverHandling ={"Bubble"}              
+                    cellWidthSpec = {'manual'}
+                    onBeforeCellRender ={ "true"}
+                    theme={"stage"}
+
 
                     resources = { 
                       tests.map((p,i)=>{
@@ -134,71 +154,14 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
                     }) }
                
             /> 
-                
+            )}
                    
-                
-       
-            {/* <table>
-               <th >
-                    {posts.map((p,i)=>{
-                      
-                      const tijd =[ tf.fromS(p.timeSpentSeconds)];
-                      return mathSum(tijd)})}
-                    </th> 
-                    
-                    </table>    */}
-           
-            <button onClick={datePick}>last month</button> <button onClick={datePick2}>This month</button>  <button onClick={datePick1}>next month</button>
-                {/* <DayPilotScheduler
-                   cellWidth = {75}
-                   eventHeight = {50}
-                     startDate = {start}
-                     days = {DayPilot.Date.today().daysInMonth()}
-                    scale = {"Day"}
-                    timeHeaders = {[
-                        {groupBy: "Month"},
-                        {groupBy: "Day", format: "d"}
-                    ]}
-                    treeEnabled={true} 
-                    groupConcurrentEvents={true}
-                    rowHeaderColumnsMode={"Tabular"}
-                    autoScroll ={"Always"} 
-                    eventClickHandling={false}
-                    rowHeaderColumns ={[{ text: 'Name', display: "name", sort: "name" },
-                    { text: 'description', display: "description", sort: "description" }]}
-            resources={ [
-                {name: "Group A", id: "A", expanded: true, children: [
-                { name: "Resource A",description:"test", id: "A"},
-                {name: "Resource B", id: "B"},
-                {name: "Resource C", id: "C"},
-                {name: "Resource D", id: "D"},
-                {name: "Resource E", id: "E"},
-                {name: "Resource F", id: "F"},
-                {name: "Resource G", id: "G"}
-              ]
-            },
-            {name: "Group B", id: "B", expanded: true, children: [
-                {  text: "Group B", name: "Resource A", id: "A"},
-                {name: "Resource B", id: "B"},
-                {name: "Resource C", id: "C"},
-                {name: "Resource D", id: "D"},
-                {name: "Resource E", id: "E"},
-                {name: "Resource F", id: "F"},
-                {name: "Resource G", id: "G"}
-              ]
-            }
-        
-            ]}
-            events={[
-                {id: 1, text: "Event 1", start: "2022-03-02T00:00:00", end: "2022-03-05T00:00:00", resource: "A" },
-                {id: 2, text: "Event 2", start: "2022-03-03T00:00:00", end: "2022-03-10T00:00:00", resource: "A", barColor: "#38761d", barBackColor: "#93c47d" },
-                {id: 3, text: "Event 3", start: "2022-03-02T00:00:00", end: "2022-03-08T00:00:00", resource: "A", barColor: "#f1c232", barBackColor: "#f1c232" },
-                {id: 4, text: "Event 3", start: "2022-03-02T00:00:00", end: "2022-03-08T00:00:00", resource: "A", barColor: "#cc0000", barBackColor: "#ea9999" }
-            ]} 
             
+           
+            <a onClick={datePick} id="buttonsUx">&#8249; last month</a> <a onClick={datePick2}  id="buttonsUx">This month </a>  <a onClick={datePick1}  id="buttonsUx">next month &#8250;</a>
                 
-            />   */}
-              
+
+               
             </div>
            
         );

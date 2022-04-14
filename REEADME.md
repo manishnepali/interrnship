@@ -11,6 +11,7 @@
 
 #instruction manual
 #/timesheet to see timelogged by id 
+#/team to choose which member u want to see thee logs from the team
 #/approved to see workload open for approval by u
 
 

@@ -7,8 +7,9 @@ function Nav() {
           <ul style={{listStyle: "none", marginTop: "50%"}}>
             
                  <li><a href="/">Home</a></li>
-                 <li><a href="/timesheet">timesheet</a></li>
-                 <li><a href="/approved">approved</a></li>
+                 <li><a href="https://cors-anywhere.herokuapp.com/corsdemo" target="blank">corsdemo</a></li>
+                 {/* <li><a href="/approved">approved</a></li>
+                 <li> <a href="https://cors-anywhere.herokuapp.com/corsdemo" target="_blank">cors setup</a></li> */}
 
                  
         

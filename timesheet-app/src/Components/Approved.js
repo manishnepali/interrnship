@@ -37,6 +37,18 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     }).catch(err => console.error(err));
   },[]);
 
+  async function approveIt(){
+    axios.post(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/user/${id}/approve`,
+        
+    header)
+  .then( function (response)  {
+    console.log(
+      `Response: ${response.status} ${response.statusText}`
+    )
+  }).catch(err => console.error(err));
+
+  }
+
  
   const columns = useMemo(
     () => [
@@ -46,6 +58,15 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     accessor: "period.to"},
     {Header: "status",
     accessor: "status.key"},
+    {Header: "approve",
+    accessor: "approve",
+    Cell: ({ cell }) => (
+      <button value={"approve"} onClick={approveIt}>
+        {"approve"}
+      </button>
+    )},
+    {Header: "reject",
+    accessor: "reject"}
       
     
     ],
@@ -67,7 +88,9 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
         <p>Loading Please wait...</p>
       ) : (
         <Table columns={columns} data={posts}
-        ></Table>
+        >
+          <button>approve</button>
+        </Table>
       )}
       
       </div>

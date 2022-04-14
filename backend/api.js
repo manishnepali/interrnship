@@ -6,10 +6,11 @@ import cors from 'cors';
 const app = express()
 const port = 3080
 app.use(cors());
-
+const manish = "61bb432957d5c3007124f6d5";
+const team = "10055";
 const test = "http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/timesheet-approval/pending http://{JIRA_BASE_URL}/rest/tempo-timesheets/4/worklogs/{worklogId}"
 //feych users from abano 
-  await fetch(`https://abano-playground.atlassian.net/rest/api/3/search?jql=reporter=5e5e4a5429e6d00c970855e4`, {
+  await fetch(`https://abano-playground.atlassian.net/rest/api/3/search?jql=project=${team}&assignee=${manish}`, {
     method: 'GET',
     headers: {
       'Authorization': `Basic ${Buffer.from(
@@ -115,7 +116,7 @@ await fetch(`https://api.tempo.io/core/3/timesheet-approvals/user/61bb432957d5c3
   }))
   .catch(err => console.error(err));
 
-  await fetch('https://api.tempo.io/core/3/work-attributes', {
+  await fetch('https://api.tempo.io/core/3/accounts', {
   method: 'GET',
   headers: {
     'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki",
