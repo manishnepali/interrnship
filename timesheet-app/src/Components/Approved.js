@@ -47,7 +47,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     header)
   .then( function (response)  {
     document.getElementById("err").style.background = "#07926C";
-    document.getElementById("err").innerHTML = response;
+    document.getElementById("err").innerHTML = response.statusText;
     console.log(
       `Response: ${response.status} ${response.statusText}`
     )
@@ -61,7 +61,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
         
     header)
   .then( function (response)  {
-    document.getElementById("err").innerHTML = response;
+    document.getElementById("err").innerHTML = response.statusText;
     document.getElementById("err").style.background = "#07926C";
     console.log(
       `Response: ${response.status} ${response.statusText}`
@@ -73,12 +73,18 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
  //map data in table
   const columns = useMemo(
     () => [
+      {Header: "user",
+    accessor: "user.displayName"},
       {Header: "from",
     accessor: "period.from"},
     {Header: "to",
     accessor: "period.to"},
     {Header: "status",
     accessor: "status.key"},
+    {Header: "requiredSeconds",
+    accessor: "requiredSeconds"},
+    {Header: "timeSpentSeconds",
+    accessor: "timeSpentSeconds"},
     {Header: "approve",
     accessor: "approve",
    //create a approve button
@@ -111,9 +117,9 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
 
     return (
       <div className="Approved">
-        <h1>
-      current approval for this team
-      </h1>
+        <h2>
+      Approvals form last month for member of current team:
+      </h2>
          {loadingData ? (
         <p>Loading Please wait...</p>
       ) : (

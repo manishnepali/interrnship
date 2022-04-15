@@ -16,6 +16,7 @@ function Filter() {
   const [showTeams, setShowTeams] = useState(false);
   const [members, setMembers] = useState([]);
   const [close, setClose] = useState(false);
+  const [popUp, setPopup] = useState(true);
   const [showText, setText] = useState(true);
   const [refresh, setRefesh] = useState(true);
 
@@ -125,8 +126,9 @@ setShowTable(false);
    setClose(false);
    setText(true);
    setRefesh(true);
-
-
+}
+function closePop(){
+  setPopup(false)
 }
   
 
@@ -136,6 +138,7 @@ setShowTable(false);
         <Router>
         <Switch>
         <Route exact path="/">
+          
           {/**select a team on the homepage */}
         <form action=""
         className="Form"
@@ -172,41 +175,40 @@ setShowTable(false);
           {refresh? <a id="buttonsUx" style={{fontSize: "1em"}} onClick={getMember}> <Link to="/team">see timesheet</Link> </a> :null}
           </div>
           <div id="searchGroup">
-          <a id="buttonsUx" class ="seeTimesheet" style={{fontSize: "1em"}} onClick={getTimesheet}> 
-          logged hours </a>
+          {/* <a id="buttonsUx" class ="seeTimesheet" style={{fontSize: "1em"}} onClick={getTimesheet}>  */}
+          {/* logged hours </a> */}
            {/**get approval table*/}
-          <a id="buttonsUx" style={{fontSize: "1em", marginLeft:"10%"}} onClick={getApproval}> Timesheet Approvals </a>
+          {/* <a id="buttonsUx" style={{fontSize: "1em", marginLeft:"10%"}} onClick={getApproval}> Timesheet Approvals </a> */}
           {/* <button id="searchA" style={{fontSize: "1em"}} onClick={getWaiting}> Timesheet waiting for Approvals </button> */}
 
           </div>
           <div id="teamBox">
              {/** /team default */}
             {showText?<div>
+              <Approved/>
               <h3>How to use:</h3>
               <p>Select a member from the select field</p>
               <p>Now you can view timesheet by member.</p>
-               <p>Check the status of timesheet approvals for this month for this team
+               {/* <p>Check the status of timesheet approvals for this month for this team
               </p>
-              <p>optional: see timesheet waiting for your apprroval </p>
+              <p>optional: see timesheet waiting for your apprroval </p> */}
             </div>:null}
             
             
        
             {showTable ? 
-              
-              <Scheduler/> : null}
+              <div>
+                {close ? <a id="buttonsUx"style={{backgroundColor:"ff4c30", marginLeft:"90%"}}
+          onClick={closeDiv}> &#x2715; </a>:null}
+              <Scheduler/> 
+              </div>: null}
                    
          
-            {showApproval ? <Approved/>:null}
-          {showTeams ? <Time/>:null}
+            {/* {showApproval ? <Approved/>:null} */}
+          {/* {showTeams ? <Time/>:null} */}
         
           </div>
            {/**close button*/}
-          {close ? <a style={{fontSize: "1em", color: "white",
-          position: "absolute", left: "90%", top: "60%", borderRadius: "50%", backgroundColor: "#ff4c30", cursor:"pointer",
-          display: "flex",flexFlow: "column nowrap",justifyContent: "center", alignItems: "center",  padding: "8px 16px"
-        }}
-          onClick={closeDiv}> X </a>:null}
           </Route>
           <Route exact path="/approved">
 
@@ -219,7 +221,20 @@ setShowTable(false);
         </Router>
         
         
-       
+        {popUp? <div id="popUp"
+                          style={{
+                            margin: 15, padding: 10, marginLeft:"70%",marginRight:"10%", backgroundColor: "#ecff40b5",
+                          borderRadius: "10%"}}>
+                    <p> Before you start, <br/>
+                    go to <a onClick={closePop}
+                    style={{cursor:"pointer", color:"red"}} href="https://cors-anywhere.herokuapp.com/corsdemo">corsdemo </a>and request Access and refresh the page</p> 
+
+                    <a onClick={closePop} style={{backgroundColor:"ff4c30"}} id="buttonsUx">&#x2715;</a>
+
+
+
+                    
+                          </div>:null}
       </div>
     );
 

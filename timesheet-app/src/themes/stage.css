@@ -15,23 +15,28 @@ Theme Designer Version: 2021.09.25.67272
 .stage_event { 
 }
 .stage_event { 
+    font-size: 11px;
     color: #000;
+    background-color: none;
+    display: flex;
+    align-items: flex-start;
     
 }
 .stage_event { 
     position: absolute;
     margin: 0px;
     overflow: hidden;
-    background-color: #26ba58;
-    padding: 2px;
+    border: solid 2px;
+    border-color: #38761d;
+    background-color: #38761d6a;
     left: 0px;
-    right: 2px;
+    right: 0px;
     top: 0px;
-    bottom: 3px;
+    bottom: 0px;
     box-shadow:
-        1px 2px 3px rgba(000,000,000,0.3);
+        1px 1px 1px rgba(000,000,000,0.3);
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 .stage_timeheadergroup,
 .stage_timeheadercol

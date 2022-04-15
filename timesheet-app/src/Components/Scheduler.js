@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import tf from 'hh-mm-ss';
 import mathSum from 'math-sum';
-import Approved from './Approved';
+
 
 export default function Scheduler(){
   const [posts, setPost] = useState([])
@@ -102,7 +102,7 @@ function onBeforeCellRender(args) {
 
     const row = DayPilot.Scheduler.rows.find(args.cell.resource);
     const total = row.events.totalDuration();
-
+    console.log("row",row);
     if (total.totalDays() > 0) {
        args.cell.properties.html = total.totalDays();
       args.cell.properties.areas = [
@@ -178,20 +178,17 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
          
            //bind events to the issues, tf = to convert seconds to hours, start = value where the event will be placed, resource = bind it to the issue 
                     events={posts.map((p,i)=>{
-                       return {id: p.jiraWorklogId, text: `${tf.fromS(p.timeSpentSeconds)} hour `, start: `${p.startDate}T00:00:00`, end: `${p.startDate}T23:00:00`, resource: `${p.issue.id}`,  backColor: "#ffffff" , bubbleHtml: `${p.description} `}
+                       return {id: p.jiraWorklogId, text: `${tf.fromS(p.timeSpentSeconds)} \n hours `, start: `${p.startDate}T00:00:00`, end: `${p.startDate}T23:00:00`, resource: `${p.issue.id}`,  backColor: "#ffffff" , bubbleHtml: `${p.description} `}
                     }) }
                
             /> 
             )}
                    
-            
+            <br/>
            {/**navigate through next, this and last month */}
             <a onClick={datePick} id="buttonsUx">&#8249; last month</a> <a onClick={datePick2}  id="buttonsUx">This month </a>  <a onClick={datePick1}  id="buttonsUx">next month &#8250;</a>
                 
-                    <div>
-                     {/**show timelogs in revieuw & open */} 
-                      <Approved/>
-                    </div>
+                   
                
             </div>
             
