@@ -10,7 +10,7 @@ import  Scheduler from "./Scheduler";
 function Filter() {
   const [users, setUser]= useState([]);
   const [teams, setTeams]= useState([]);
-  const [result, setResult]= useState([]);
+  // const [result, setResult]= useState([]);
   const [showTable, setShowTable] = useState(false);
   const [showApproval, setShowApproval] = useState(false);
   const [showTeams, setShowTeams] = useState(false);
@@ -19,6 +19,7 @@ function Filter() {
   const [showText, setText] = useState(true);
   const [refresh, setRefesh] = useState(true);
 
+    //authentication for tempo timesheet, request a api-key in tempo app from the jira-workspace
   const header ={
     headers: {
       'Access-Control-Allow-Origin': 'true',
@@ -28,11 +29,11 @@ function Filter() {
        
      }
   }
-  // https://cors-anywhere.herokuapp.com/
+  // https://cors-anywhere.herokuapp.com/corsdemo = request asses before lauching the app
  
 
   useEffect(() => {
-
+//get all teams
     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
     header)
   .then( function (response)  {
@@ -45,18 +46,8 @@ function Filter() {
     
   }).catch(err => console.error(err));
 },[]);
-//   useEffect(() => {
-//     axios.get('/team')
-//   .then( function (response)  {
-//     console.log(
-//       `Response: ${response.status} ${response.statusText}`
-//     )
-//     setUser(response.data.results);
-//     setResult(response.data)
- 
-//   }).catch(err => console.error(err));
-// },[]);
 console.log(users);
+//get team members by team id
 function getWorker(e){
   e.preventDefault();
   const select = document.getElementById("test");
@@ -82,7 +73,7 @@ function getWorker(e){
     getTeams();
     console.log(teams,  id)
   }
-
+//get member id from html
   function getMember(e){
     e.preventDefault();
     setRefesh(false);
@@ -92,24 +83,10 @@ function getWorker(e){
     localStorage.setItem('accountId', accountId);
    const test =localStorage.getItem('accountId');
     console.log("local", test);
-    function getInfo(){
-      axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/worklogs/user/${accountId}`,
-          header)
-        .then( function (response)  {
-          console.log(
-            `Response: ${response.status} ${response.statusText}`
-          )
-          setMembers(response.data.results);
-          console.log("member",members);
-          
-        }).catch(err => console.error(err));
-      }
-      // getInfo();
       const personName = document.getElementById("personName").text
       localStorage.setItem('personName', personName);
       
       setShowTable(true);
-     
       setShowApproval(false);
       setShowTeams(false);
       setClose(true);
@@ -118,31 +95,7 @@ function getWorker(e){
       console.log(users)
       
   }
-  // function getWaiting(e){
-  //   e.preventDefault();
-
-  //   function getWait(){
-  //     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/waiting`,
-  //         header)
-  //       .then( function (response)  {
-  //         console.log(
-  //           `Response: ${response.status} ${response.statusText}`
-  //         )
-  //         setResult(response.data.results);
-  //         console.log("result",result);
-          
-  //       }).catch(err => console.error(err));
-  //     }
-  //      getWait();
-  //     setShowTable(false);
-     
-  //     setShowApproval(false);
-  //     setShowTeams(false);
-  //     setClose(true);
-  //     setText(false);
-
-  //     console.log(users)
-  // }
+//show /approved in div
   function getApproval(e){
     e.preventDefault();
     setShowTable(false);
@@ -153,6 +106,7 @@ function getWorker(e){
     setText(false);
 
   }
+//show calender visual in div
  function getTimesheet(e){
 
 
@@ -182,6 +136,7 @@ setShowTable(false);
         <Router>
         <Switch>
         <Route exact path="/">
+          {/**select a team on the homepage */}
         <form action=""
         className="Form"
         style={{ margin: 15, padding: 10}}>
@@ -194,7 +149,7 @@ setShowTable(false);
           </select>
           
     
-                
+                 {/**get members from selected team*/}
            <button id="search" onClick={getWorker}> <Link to="/team">zoek</Link> </button>
         </form>
         </Route>
@@ -202,7 +157,8 @@ setShowTable(false);
           <Time />
           
           </Route>
-          <Route exact path="/team">          
+          <Route exact path="/team">     
+           {/**select a member from the team */}     
          <div id="teamForm">
             <label>select a worker:</label>
              <select style={{ margin: 15, padding: 10}} id="acc">
@@ -211,18 +167,20 @@ setShowTable(false);
                                   {team.member.displayName} is a {team.memberships.active.role.name}
         </option>
         })}
-
+           {/**get timesheet */}
           </select> 
           {refresh? <a id="buttonsUx" style={{fontSize: "1em"}} onClick={getMember}> <Link to="/team">see timesheet</Link> </a> :null}
           </div>
           <div id="searchGroup">
           <a id="buttonsUx" class ="seeTimesheet" style={{fontSize: "1em"}} onClick={getTimesheet}> 
           logged hours </a>
+           {/**get approval table*/}
           <a id="buttonsUx" style={{fontSize: "1em", marginLeft:"10%"}} onClick={getApproval}> Timesheet Approvals </a>
           {/* <button id="searchA" style={{fontSize: "1em"}} onClick={getWaiting}> Timesheet waiting for Approvals </button> */}
 
           </div>
           <div id="teamBox">
+             {/** /team default */}
             {showText?<div>
               <h3>How to use:</h3>
               <p>Select a member from the select field</p>
@@ -243,6 +201,7 @@ setShowTable(false);
           {showTeams ? <Time/>:null}
         
           </div>
+           {/**close button*/}
           {close ? <a style={{fontSize: "1em", color: "white",
           position: "absolute", left: "90%", top: "60%", borderRadius: "50%", backgroundColor: "#ff4c30", cursor:"pointer",
           display: "flex",flexFlow: "column nowrap",justifyContent: "center", alignItems: "center",  padding: "8px 16px"

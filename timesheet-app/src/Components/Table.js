@@ -1,6 +1,6 @@
 import React from "react";
 import { useTable } from "react-table";
-
+//to render a table
 export default function Table({ columns, data }) { const {
     getTableProps, // Sends the needed props to your table.
     getTableBodyProps, // Sends needed props to your table body
