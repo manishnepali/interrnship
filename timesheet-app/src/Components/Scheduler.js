@@ -9,13 +9,14 @@ import Approved from './Approved';
 export default function Scheduler(){
   const [posts, setPost] = useState([])
   const [tests, setTest] = useState([])
-  const [showJira, setShowJira] = useState(false);
-  const [user, setUser] = useState([])
+  // const [showJira, setShowJira] = useState(false);
+  // const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
   const accountId = localStorage.getItem('accountId'); 
   const teamName = localStorage.getItem('team');
   console.log("teamName",teamName);
-  const initialValue = 0;
+  // const initialValue = 0;
+  //authentication for tempo timesheet, request a api-key in tempo app from the jira-workspace
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
@@ -24,15 +25,9 @@ export default function Scheduler(){
       'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
     }
     }
-    const header1 ={ 
-      headers: {
-       'Access-Control-Allow-Origin':'*',
-        'Accept': 'application/json',
-        'Authorization': "Basic manish.nepali@abano.be:ipg6cqECKxuN31e8MLl8F131"
-      }
-      }
-
+    //api-calls 
       useEffect(() => {
+        //get all worklogs
         axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/worklogs/`,
         
         header)
@@ -41,28 +36,27 @@ export default function Scheduler(){
           `Response: ${response.status} ${response.statusText}`
         )
         setPost(response.data.results);
-       
+       //set data in arrray 
         console.log(posts)
         setLoadingData(false);
       }).catch(err => console.error(err));
 
+      //get issues by assignee and reporter
       axios.get(`https://cors-anywhere.herokuapp.com/https://abano-playground.atlassian.net/rest/api/3/search?jql=assignee=${accountId}||reporter=${accountId}`,
    {
     headers: {
       'Authorization': `Basic ${Buffer.from(
-        'manish.nepali@abano.be:ipg6cqECKxuN31e8MLl8F131'
+        'manish.nepali@abano.be:ipg6cqECKxuN31e8MLl8F131' //authemtication api key from attlassian
       ).toString('base64')}`
     },
     'Accept': 'application/json',
     },
-   
-    
   )
   .then( function (response)  {
     console.log(
       `Response: ${response.status} ${response.statusText}`
     )
-    setTest(response.data.issues);
+    setTest(response.data.issues); //set data in arrray 
     console.log("tests:",tests.data.issues)
     setLoadingData(false);
   }).catch(err => console.error(err));
@@ -78,6 +72,8 @@ async function getWorklogs(){
   
 }
 
+
+//Create a summary colum on the right to display total hours worked that month by issues
 const summaryStart = new DayPilot.Date("2100-01-01");
 function createTimeline() {
   const timeline = [];
@@ -99,21 +95,7 @@ function createTimeline() {
   
   return timeline;
 }
-
-
-
-
-const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
- function datePick(){
-    return setStart(DayPilot.Date.today().addDays(-30).firstDayOfMonth());
- }
- function datePick1(){
-    return setStart(DayPilot.Date.today().addDays(30).firstDayOfMonth());
- }
- function datePick2(){
-    return setStart(DayPilot.Date.today().firstDayOfMonth());
- }
- function onBeforeCellRender(args) {
+function onBeforeCellRender(args) {
   if (args.cell.start === summaryStart) {
     args.cell.properties.disabled = true;
     args.cell.properties.backColor = "#beab3f";
@@ -142,9 +124,24 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
 }
 
 
+
+//to navigate to this, last and next month
+const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
+ function datePick(){
+    return setStart(DayPilot.Date.today().addDays(-30).firstDayOfMonth());
+ }
+ function datePick1(){
+    return setStart(DayPilot.Date.today().addDays(30).firstDayOfMonth());
+ }
+ function datePick2(){
+    return setStart(DayPilot.Date.today().firstDayOfMonth());
+ }
+
+
+
         return (
             <div style={{width: "70%",  marginLeft: "15%", marginBottom: "2%"}}>
-             
+             {/* only render calender-table if the data has loaded */}
               <h2>user timesheet</h2>
          {loadingData ? (
         <p>Loading Please wait...</p>
@@ -171,7 +168,7 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
                     onBeforeCellRender={args => onBeforeCellRender(args)}
                     theme={"stage"}
 
-                   
+                   //loop over issues
                     resources = { 
                       tests.map((p,i)=>{
                         
@@ -179,7 +176,7 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
                           
             })}
          
-           
+           //bind events to the issues, tf = to convert seconds to hours, start = value where the event will be placed, resource = bind it to the issue 
                     events={posts.map((p,i)=>{
                        return {id: p.jiraWorklogId, text: `${tf.fromS(p.timeSpentSeconds)} hour `, start: `${p.startDate}T00:00:00`, end: `${p.startDate}T23:00:00`, resource: `${p.issue.id}`,  backColor: "#ffffff" , bubbleHtml: `${p.description} `}
                     }) }
@@ -188,10 +185,11 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
             )}
                    
             
-           
+           {/**navigate through next, this and last month */}
             <a onClick={datePick} id="buttonsUx">&#8249; last month</a> <a onClick={datePick2}  id="buttonsUx">This month </a>  <a onClick={datePick1}  id="buttonsUx">next month &#8250;</a>
                 
                     <div>
+                     {/**show timelogs in revieuw & open */} 
                       <Approved/>
                     </div>
                
