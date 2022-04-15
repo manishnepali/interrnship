@@ -2,7 +2,7 @@
 test prototye
 1)go to https://cors-anywhere.herokuapp.com/corsdemo
 2)unlock access to the demo,
-3)go to 
+3)go to https://polite-parfait-8513b5.netlify.app/
 
 steps to test the prototype manually
 1)go to https://cors-anywhere.herokuapp.com/corsdemo
