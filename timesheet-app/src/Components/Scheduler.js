@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Buffer } from 'buffer';
 import tf from 'hh-mm-ss';
 import mathSum from 'math-sum';
+import Approved from './Approved';
 
 export default function Scheduler(){
   const [posts, setPost] = useState([])
@@ -13,7 +14,7 @@ export default function Scheduler(){
   const [loadingData, setLoadingData] = useState(true);
   const accountId = localStorage.getItem('accountId'); 
   const teamName = localStorage.getItem('team');
-  console.log(teamName);
+  console.log("teamName",teamName);
   const initialValue = 0;
   const header ={ 
     headers: {
@@ -112,6 +113,33 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
  function datePick2(){
     return setStart(DayPilot.Date.today().firstDayOfMonth());
  }
+ function onBeforeCellRender(args) {
+  if (args.cell.start === summaryStart) {
+    args.cell.properties.disabled = true;
+    args.cell.properties.backColor = "#beab3f";
+
+    const row = DayPilot.Scheduler.rows.find(args.cell.resource);
+    const total = row.events.totalDuration();
+
+    if (total.totalDays() > 0) {
+       args.cell.properties.html = total.totalDays();
+      args.cell.properties.areas = [
+        {
+          left: 0,
+          right: 0,
+          top: 0,
+          bottom: 0,
+          style: "display: flex; justify-content: center; align-items: center;",
+          html: "total.totalDays()"
+        }
+      ];
+    }
+    else {
+      args.cell.properties.areas = [];
+    }
+
+  }
+}
 
 
         return (
@@ -139,16 +167,19 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
                     rowHeaderColumnsMode={"Tabular"}     
                     eventHoverHandling ={"Bubble"}              
                     cellWidthSpec = {'manual'}
-                    onBeforeCellRender ={ "true"}
+                    beforeCellRenderCaching={"false"} 
+                    onBeforeCellRender={args => onBeforeCellRender(args)}
                     theme={"stage"}
 
-
+                   
                     resources = { 
                       tests.map((p,i)=>{
                         
                         return{ name: p.key , id: p.id}
                           
             })}
+         
+           
                     events={posts.map((p,i)=>{
                        return {id: p.jiraWorklogId, text: `${tf.fromS(p.timeSpentSeconds)} hour `, start: `${p.startDate}T00:00:00`, end: `${p.startDate}T23:00:00`, resource: `${p.issue.id}`,  backColor: "#ffffff" , bubbleHtml: `${p.description} `}
                     }) }
@@ -160,9 +191,12 @@ const [start, setStart] = useState(DayPilot.Date.today().firstDayOfMonth());
            
             <a onClick={datePick} id="buttonsUx">&#8249; last month</a> <a onClick={datePick2}  id="buttonsUx">This month </a>  <a onClick={datePick1}  id="buttonsUx">next month &#8250;</a>
                 
-
+                    <div>
+                      <Approved/>
+                    </div>
                
             </div>
+            
            
         );
     

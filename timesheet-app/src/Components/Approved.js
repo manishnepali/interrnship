@@ -11,6 +11,8 @@ function Approved() {
   const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
   const id = localStorage.getItem('id');
+  const accountId = localStorage.getItem('accountId');
+  console.log(accountId);
 // const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD');
 // const endOfMonth   = moment().clone().endOf('month').format('YYYY-MM-DD');
 const startOfMonth = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');;
@@ -37,8 +39,9 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     }).catch(err => console.error(err));
   },[]);
 
-  async function approveIt(){
-    axios.post(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/user/${id}/approve`,
+  async function approveIt(e){
+    e.preventDefault();
+    axios.post(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/user/${accountId}/approve?from=${startOfMonth}&to=${endOfMonth}`,
         
     header)
   .then( function (response)  {
@@ -89,7 +92,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
       ) : (
         <Table columns={columns} data={posts}
         >
-          <button>approve</button>
+          <button >approve</button>
         </Table>
       )}
       

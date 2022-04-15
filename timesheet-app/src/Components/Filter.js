@@ -34,7 +34,6 @@ function Filter() {
   useEffect(() => {
 
     axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
-    // axios.get(`https://cors.bridged.cc/https://api.tempo.io/core/3/teams`,
     header)
   .then( function (response)  {
     console.log(

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {useState, useEffect, useMemo} from 'react';
 import tf from 'hh-mm-ss';
-import Scheduler from './Scheduler'
 import {DayPilot, DayPilotScheduler} from "daypilot-pro-react";
 import { Buffer } from 'buffer';
 
