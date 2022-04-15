@@ -46,10 +46,12 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
         
     header)
   .then( function (response)  {
+    document.getElementById("err").style.background = "#07926C";
+    document.getElementById("err").innerHTML = response;
     console.log(
       `Response: ${response.status} ${response.statusText}`
     )
-  }).catch(err => console.error(err));
+  }).catch(err => {console.error(err); document.getElementById("err").style.background = "#D70300"; document.getElementById("err").innerHTML = err;});
 
   }
   //approve the open or in review timesheet
@@ -59,10 +61,12 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
         
     header)
   .then( function (response)  {
+    document.getElementById("err").innerHTML = response;
+    document.getElementById("err").style.background = "#07926C";
     console.log(
       `Response: ${response.status} ${response.statusText}`
     )
-  }).catch(err => console.error(err));
+  }).catch(err => {console.error(err); document.getElementById("err").style.background = "#D70300"; document.getElementById("err").innerHTML = err; });
 
   }
 
@@ -118,7 +122,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
           
         </Table>
       )}
-      
+      <div id="err"></div>
       </div>
     );
   }
