@@ -8,16 +8,17 @@ import moment from 'moment';
 function Approved() {
   
   const [posts, setPost] = useState([])
-  const [user, setUser] = useState([])
   const [loadingData, setLoadingData] = useState(true);
   const id = localStorage.getItem('id');
   const accountId = localStorage.getItem('accountId');
   console.log(accountId);
-// const startOfMonth = moment().clone().startOf('month').format('YYYY-MM-DD');
-// const endOfMonth   = moment().clone().endOf('month').format('YYYY-MM-DD');
-const startOfMonth = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');;
-const endOfMonth   = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');;
+
+//date funtion
+const startOfMonth = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');
+const endOfMonth   = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
 console.log("s:", startOfMonth, "e:", endOfMonth);
+
+
   const header ={ 
     headers: {
      'Access-Control-Allow-Origin':'*',
@@ -26,7 +27,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
       'Authorization': "Bearer vlArWEw06XS8hk2fu8MdOcPpWWNAki"
     }
     }
-
+//get approval by team
     useEffect(() => {
       axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/team/${id}?from=${startOfMonth}&to=${endOfMonth}`,
       header)
@@ -38,7 +39,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
       setLoadingData(false);
     }).catch(err => console.error(err));
   },[]);
-
+//approve the open or in review timesheet
   async function approveIt(e){
     e.preventDefault();
     axios.post(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/user/${accountId}/approve?from=${startOfMonth}&to=${endOfMonth}`,
@@ -51,8 +52,21 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
   }).catch(err => console.error(err));
 
   }
+  //approve the open or in review timesheet
+  async function rejectIt(e){
+    e.preventDefault();
+    axios.post(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/timesheet-approvals/user/${accountId}/reject?from=${startOfMonth}&to=${endOfMonth}`,
+        
+    header)
+  .then( function (response)  {
+    console.log(
+      `Response: ${response.status} ${response.statusText}`
+    )
+  }).catch(err => console.error(err));
 
- 
+  }
+
+ //map data in table
   const columns = useMemo(
     () => [
       {Header: "from",
@@ -63,13 +77,22 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     accessor: "status.key"},
     {Header: "approve",
     accessor: "approve",
+   //create a approve button
     Cell: ({ cell }) => (
+      
       <button value={"approve"} onClick={approveIt}>
         {"approve"}
       </button>
     )},
     {Header: "reject",
-    accessor: "reject"}
+    accessor: "reject",
+    //create a approve button
+     Cell: ({ cell }) => (
+       
+       <button value={"reject"} onClick={rejectIt}>
+         {"reject"}
+       </button>
+     )}
       
     
     ],
@@ -92,7 +115,7 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
       ) : (
         <Table columns={columns} data={posts}
         >
-          <button >approve</button>
+          
         </Table>
       )}
       
