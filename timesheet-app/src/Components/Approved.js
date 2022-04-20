@@ -13,7 +13,7 @@ function Approved() {
   const accountId = localStorage.getItem('accountId');
   console.log(accountId);
 
-//date funtion
+//get date funtion
 const startOfMonth = moment().subtract(1,'months').startOf('month').format('YYYY-MM-DD');
 const endOfMonth   = moment().subtract(1,'months').endOf('month').format('YYYY-MM-DD');
 console.log("s:", startOfMonth, "e:", endOfMonth);
@@ -89,10 +89,10 @@ console.log("s:", startOfMonth, "e:", endOfMonth);
     accessor: "approve",
    //create a approve button
     Cell: ({ cell }) => (
-      
       <button value={"approve"} onClick={approveIt}>
         {"approve"}
       </button>
+      
     )},
     {Header: "reject",
     accessor: "reject",

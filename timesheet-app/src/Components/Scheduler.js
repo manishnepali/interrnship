@@ -104,8 +104,8 @@ function onBeforeCellRender(args) {
     const total = row.events.totalDuration();
     console.log("row",row);
     if (total.totalDays() > 0) {
-       args.cell.properties.html = total.totalDays();
-      args.cell.properties.areas = [
+       //args.cell.properties.html = total.totalDays();
+    return  args.cell.properties.areas = [
         {
           left: 0,
           right: 0,
@@ -117,7 +117,7 @@ function onBeforeCellRender(args) {
       ];
     }
     else {
-      args.cell.properties.areas = [];
+    return  args.cell.properties.areas = [];
     }
 
   }
