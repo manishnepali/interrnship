@@ -227,9 +227,7 @@ function closePop(){
                           style={{
                             margin: 15, padding: 10, marginLeft:"70%",marginRight:"10%", backgroundColor: "#ecff40b5",
                           borderRadius: "10%"}}>
-                    <p> Before you start, <br/>
-                    go to <a onClick={closePop}
-                    style={{cursor:"pointer", color:"red"}} href="https://cors-anywhere.herokuapp.com/corsdemo">corsdemo </a>and request Access and refresh the page</p> 
+                    <p> This is a small demo of how the web app looked like. Since I don't have access to the company API anymore, a lot of the features are not availible at the moment. Please enjoy</p> 
 
                     <a onClick={closePop} style={{backgroundColor:"ff4c30"}} id="buttonsUx">&#x2715;</a>
 
