@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch, Link, useHistory} from 'react-ro
 import Time from './Time';
 import Approved from "./Approved";
 import  Scheduler from "./Scheduler";
-
+import data from "./data/data.json"
 
 
 function Filter() {
@@ -35,18 +35,20 @@ function Filter() {
 
   useEffect(() => {
 //get all teams
-    axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
-    header)
-  .then( function (response)  {
-    console.log(
-      `Response: ${response.status} ${response.statusText}`
-    )
-    setUser(response.data.results);
-    console.log("uuser",users);
+  //   axios.get(`https://cors-anywhere.herokuapp.com/https://api.tempo.io/core/3/teams`,
+  //   header)
+  // .then( function (response)  {
+  //   console.log(
+  //     `Response: ${response.status} ${response.statusText}`
+  //   )
+  //   setUser(response.data.results);
+  //   console.log("uuser",users);
 
     
-  }).catch(err => console.error(err));
+  // }).catch(err => console.error(err));
+  setUser(data)
 },[]);
+// setUser(data)
 console.log(users);
 //get team members by team id
 function getWorker(e){
@@ -184,24 +186,24 @@ function closePop(){
           </div>
           <div id="teamBox">
              {/** /team default */}
-            {showText?<div>
-              <Approved/>
+            
+              {/* <Approved/>
               <h3>How to use:</h3>
               <p>Select a member from the select field</p>
-              <p>Now you can view timesheet by member.</p>
+              <p>Now you can view timesheet by member.</p> */}
                {/* <p>Check the status of timesheet approvals for this month for this team
               </p>
               <p>optional: see timesheet waiting for your apprroval </p> */}
-            </div>:null}
+            
             
             
        
-            {showTable ? 
+            
               <div>
                 {close ? <a id="buttonsUx"style={{backgroundColor:"ff4c30", marginLeft:"90%"}}
           onClick={closeDiv}> &#x2715; </a>:null}
               <Scheduler/> 
-              </div>: null}
+              </div>
                    
          
             {/* {showApproval ? <Approved/>:null} */}
